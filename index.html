@@ -47,21 +47,21 @@
           XXX
           Hi, I'm Charles Kerr. I haven't presented before, so a few sentences about me: I've worked for about a year on Electron for GitHub.
 
-          Before that I worked on Ubuntu Linux for Canonical,
+          Before that I worked on Ubuntu Linux,
 
-          and before that I wrote most of Transmission BitTorrent
+          and before that I wrote most of the BitTorrent app named Transmission.
 
           So I've done open source for awhile now.
 
-          And I came onto Electron because I wanted to continue to work in open source,
+          And I came to Electron because I wanted to keep doing open source,
 
-          and because I think Electron is good for getting more applications on macOS and Linux,
+          and because Electron is a net positive for getting more applications on Mac and Linux,
 
-          and because it was 2017 and it was past time for me to dive into javascript and Node.
+          and because it was 2017. it was way past time for me to dive into web tech.
         </section>
 
         <section id="intent">
-          <p>Electron's developer community is high-quality...<br/>but small.</p>
+          <p>Electron's developer community is high-quality,<br/>but small</p>
           <p>&nbsp;</p>
           <p>This walkthrough shows how get started on Electron and why it's not as scary as you think.</p>
           <p>&nbsp;</p>
@@ -69,24 +69,40 @@
           <p class="fragment" style=font-size:smaller">2. The Code <i>(building & understanding the code)</i></p>
           <p class="fragment" style=font-size:smaller">3. Putting it into Practice <i>(fixing the code)</i></p>
           <aside class="notes">
-          <p>And Electron has a small team of very smart developers who've been here lot longer I have -- one thing it doesn't have is a long tail of community pull requests.</p>
-          <p>I think there's a misperception that Electron's internals are <i>too</i> big and <i>too</i> scary. This presentation is to push back on that a little and encourage people to dive in. I'll do this in three parts:</p>
-          <p><b>fragment</b> The tools. Building electron takes a few tools you've heard of and a few weird ones you haven't, unless you're paid write web browsers.</p>
-          <p><b>fragment</b> The code. Yes, the codebase is big. Really big. You just won't believe how mind-bogglingly big it is. But I'll explain why that's OK and why you might understand it better thank you think.</p>
-          <p><b>fragment</b> Lastly, putting it into practice. We'll fix a real Electron bug with absolutely zero Electron codebase knowledge required.</p>
-          <p>And it should take about FIXME minutes.</p>
+          <p>The Electron team's got a neat dynamic: we're a small team, but even
+             then we're spread out among a lot of companies, like GitHub, Slack,
+             Microsoft, and Atlassian. And this works really well, and the PRs come in every day.</p>
+
+          <p>But we don't get as many PRs from the community as you'd expect for an
+             open source tool whose primary users are developers.</p>
+
+          <p>I think Electron's got a reputation that its internals are <i>too</i> big and <i>too</i> scary.
+             This presentation is to push back on that a little and encourage people to dive in.
+             I'll do this in three parts:</p>
+
+          <p><b>fragment</b> The tools. Building electron takes a few tools you've used and a few weird ones you haven't, unless you're paid write web browsers.</p>
+
+          <p><b>fragment</b> The code. Yes, the codebase is big. Really big. You won't believe how mind-bogglingly big it is. But I'll explain why that's OK and why you might understand more of it than you expect.</p>
+
+          <p><b>fragment</b> Lastly, putting it into practice. We'll fix a real Electron bug with zero Electron codebase knowledge required.</p>
+
           </aside>
         </section>
 
-        <section id="the-tools">
-          <p><small>Part 1 of 3</small></p>
-          <h2>The Tools</h2>
+        <section data-markdown data-separator-notes="XXX" id="part-1-the-tools">
+          #### Part 1 of 3
+          ## The Tools
+
+          XXX
+          And all this should run about FIXME minutes.
+
+          Okay so let's start with the tools.
         </section>
 
         <section data-markdown data-separator-notes="XXX" id="os-specific-prerequisites">
           ### OS-specific prerequisites
 
-          Instructions at [electronjs.org](https://electronjs.org/docs/development/build-instructions-gn)
+          Instructions at [electronjs.org/docs/](https://electronjs.org/docs/development/build-instructions-gn)
 
           Chances are you've heard of or used these tools.
 
@@ -94,7 +110,7 @@
           * Ex: installing [Node.js](https://nodejs.org/)
 
           XXX
-          So I have to say upfront that there are platform-specific tools you need to install.
+          There are platform-specific tools you need to install first.
 
           I'm going to skip past them because most developers have already used or heard of these and... they're not scary.
 
@@ -125,16 +141,16 @@
 
           So, everything Chromium needs, everything Node needs.
 
-          If you run `ldd electron` on Linux to see what shared libraries, what DLLs, it's using, you get libffmpeg, GTK+ and its dependencies. And that's about it. Like Chromium, for the most part if we need it, we compile it in.
+          If you run `ldd electron` on Linux to see what shared libraries, what DLLs, it's using, there's not a lot: you get libffmpeg, GTK+ (the GUI library Chromium uses on Linux) and its dependencies. And that's about it. Like Chromium, for the most part if we need it, we compile it in.
 
-          You don't see dynamically linked skia (the 2d graphics library Chromium uses for rendering)
+          * For example Skia, the 2D graphics library used for rendering, is statically linked in.
 
-          You don't see media libraries like libwebm
+          * Media libraries, like libwebm.
 
-          You don't see node or libuv or v8.
+          * Node, libuv, v8...
 
           It's all compiled together.
-          And there's upside to that too,
+          And there's upside to that,
           such as making sure chromium and node are built with compatible build flags
         </section>
 
@@ -154,15 +170,13 @@
           XXX
           So... yeah. That doesn't come for free.
 
-          By the way, tha tool removes duplicate files from the count.
+          By the way, that counting tool removes duplicate files from the count.
 
-          So build tools that got copied into different repos,
-          boilerplate that got copied into different repos,
-          none of that is part of that number.
+          So tools, config, and boilerplate got copied into multiple repos, none of those is part of that number.
 
           Imagine how many repos you have to clone for that.
 
-          Imagine even tracking the dependencies to know what know what repos you have to clone for that.
+          Imagine even tracking the dependencies to know what repos you'd need.
         </section>
 
         <section data-markdown data-separator-notes="XXX" id="chromium-tools">
@@ -182,7 +196,7 @@
 
           Then they decided they could do better and wrote a second meta-build
           system to replace it: GN, "generate ninja".
-          (Ninja is a build system like `make` but focused on speed.)
+          (Ninja is a build system kinda like `make` but faster.)
 
           So... we use the same tools: depot-tools (especially gclient) and GN.
 
@@ -313,13 +327,13 @@
 
         <section data-markdown data-separator-notes="XXX" data-background="careers.png">
           XXX
-          I hoped that would get a laught. I put this slide here because we've got four stats-heavy slides coming up and I wanted to keep it light.
+          I hoped that would get a laugh. I put this in because we've got four stats-heavy slides coming up and I wanted to keep it light.
 
           That 35 million LOC number is not light. That's a scary number.
 
-          That's one of the scariest number I've ever seen in code.
+          That's one of the scariest numbers I've ever seen in code.
 
-          But that counts Chromium's tests, its dependencies' tests, and a lot of pieces like this `chromecast/` and `chrome_os/` that we don't use.
+          But that counts Chromium's tests, its dependencies' tests, and a lot of pieces like `chromecast/` and `chrome_os/` that we don't use.
 
           (I hope.)
 
@@ -366,9 +380,10 @@
           ```
 
           XXX
-          Electron itself: under 100 thousand lines.
+          Electron itself: under 90 thousand lines.
 
-          Aside: some of you with sharp eyes are noticing right now that 20% of Electron's code is tests.
+          Aside: some of you with sharp eyes are noticing right now that about 20% of Electron's code is tests.
+          FIXME: the slide doesn't show this
 
           The number of open issues in our bug tracker might indicate otherwise, but each PR generates a _lot_ of testing.
 
@@ -387,12 +402,12 @@
 
           XXX
           One beautiful thing about building Electron is team
-          member Sam AT-ard at Atlassian submitted a patch to
+          member Sam atterd at Atlassian submitted a patch to
           sccache that adds two-tier caching --
 
           If you use that you never have a completely cold cache,
 
-          because even the first run can pull from Electron's CI builds' cache.
+          because even the on the first run, it can pull from Electron's CI builds' cache.
 
           This is what electron builds look like:
         </section>
@@ -430,16 +445,16 @@
 
           1. Yes, that's eighteen thousand and 98 build steps.
 
-          2. compile took less than 7 minutes. **YES** that's with a hot cache
-          and **YES** it's going to take longer with a Walmart Windows tablet...
+          2. compile took 398 seconds -- under 7 minutes. **YES** that was with a
+          hot cache and **YES** it's going to take longer with a Walmart Windows tablet...
           but without caching on this same machine it would take many hours.
           Hard to overstate how big a win this is.
 
-          3. we've lost another 1.6 GB, this time to sccache
+          3. the cache has grown again, another couple GB to sccache this time.
 
-          4. the CI cache at electronjs-sccache is working
+          4. you can see at the bottom there, the CI cache at electronjs-sccache is working
 
-          5. we're done with the scary numbers and stats.
+          We're done with the scary numbers and stats.
 
           Let's take a really quick look at the source.
         </section>
@@ -456,17 +471,17 @@
           directory does.
 
           * `lib/` is the javascript. If we can implement a feature in JS, it goes here.
-            But much of it is glue between our public API and the C++ backend.
+            Much of this is the minimum it takes to expose our C++ backend as a public JS API.
 
           Atom is the next layer, the C++ code between lib and Chromium.
-          Most of it exists to expose pieces of Chromium to Electron app devs.
+          And it, in turn, is mostly whatever it takes to epose Chromium to Electron app developers.
 
           For example the largest class in Electron is atom_api_web_contents.
           Let's take at its header file to see what it's about:
         </section>
 
         <section data-markdown data-separator-notes="XXX" id="the-biggest-class">
-          ** Excerpt from bhe biggest, scariest class in Electron (atom::api::WebContents)**
+          ** Excerpt from the biggest, scariest class in Electron (atom::api::WebContents)**
           ```cpp
             void LoadURL(const GURL& url, const mate::Dictionary& opts);
             base::string16 GetTitle() const;
@@ -490,6 +505,8 @@
 
           To be clear: no, I'm not saying Electron is easy.
           Some of it is, but a lot of it isn't.
+          You're not going to be implementing Sandboxing on
+          Linux right out of the gate.
 
           But if you've written Electron apps,
 
@@ -512,7 +529,7 @@
           <p>As said in the last slide, <b>(fragment)</b> you understand more than you think.</p>
           <p><b>(fragment)</b> When I started contributing to Electron, I'd never touched Node. So for me it was both unfamiliar *and* alien, and I stressed over that a lot.</p>
           <p>The thing to undertand is you've got millions of lines of code -- <b>everyone</b> is lost to some degree.</p>
-          <p>When I realized it's OK to be a <i>little</i> lost, that freed me up stress about it less and focus on the issues.</p>
+          <p>When I realized it's OK to be a <i>little</i> lost, that freed me up to stress about it less and focus more.</p>
           <p><b>(fragment)</b> As an aside, Chromium has a lot of solid engineering. [read fragment aloud here] The directory named `base/` holds general-use tools, mostly self-contained, so it's not a bad place to start. You'll find Chromium's string manipulation, memory management, callback binding, and so on.</p>
         </section>
 
@@ -521,26 +538,104 @@
           ## In Practice
 
           XXX
-          OK we've checked out 16 GB of source code
+          To review: So far we've checked out 16 GB of source code
 
-          We've built 18 thousand files
+          and we've built 18 thousand files
 
           and we know what `win.openDevTools()` does
 
-          We're invincible.
+          We're invincible!
 
-          Time to test that theory.
+          Time to get our hands dirty.
 
           Here's a real bug:
         </section>
 
         <section data-markdown data-separator-notes="XXX" id="bug-report" data-background="bug-report.png">
           XXX
-          So this bug report is simple: on Linux, the `alert()` dialog is showing a No Symbol.
+          So this bug report is straightforward: on Linux, the `alert()` dialog is showing a No Symbol.
 
           This should be easy to test.
         </section>
-        <section data-background-video="bugfix.webm" data-background-color="#000000"></section>
+
+        <section data-markdown data-separator-notes="XXX" data-background-video="bugfix.webm" data-background-color="#000000">
+          XXX
+          make sure we have a fresh build
+
+          let's run electron-quick-start
+
+          open devtools
+
+          and pull up an alert dialog.
+
+          sure enough.
+
+          Now, I'm pretending for this example I don't know whether Electron is using a GtkMessageDialog, a GtkDialog, or not using those at all but instead creating a custom GtkWindow.
+
+          But I do know whatever it's using, that icon is getting shown by a call to gtk_widget_show(), because that's what every GTK+ widget uses, no matter what type of class is aggregating it.
+
+          So I'll run the same test again inside a debugger and set gtk_widget_show() as a breakpoint.
+
+          open devtools again...
+
+          set the breakpoint... gdb is kind of slow.
+
+          the alert again...
+
+          cool. let's see where it's coming from.
+
+          ok this noise here is C++'s version of the green terminal windows in the matrix. You get used to it.
+
+          first thing I see here is it's in atom/browser/ui/message_box_gtk, which means it's likely our bug.
+
+          I see an argument named 'icon' of type imageskia, so maybe someone is passing in a broken icon.
+
+          let's open up atom/browser/ui/message_box_gtk line 49 and take a look.
+
+          here's where the dialog is created, and sometimes these use a default icon depending on the dialog type.
+
+          let's go back to the debugger and see what type was passed in.
+
+          looks like that type is atom::MESSAGE_BOX_TYPE_NONE, so that's not the problem.
+
+          Next I see us setting the dialog's image property if that imageskia isn't null.
+
+          let's go back to the debugger and check.
+
+          walk up the callstack
+
+          and icon.isNull() is _true_, so this block of code is never reached, so this isn't the problem either.
+
+          what else calls gtk_widget_show().
+
+          here's a call that only happens when we have a checkbox label... that's not going to be it, but just for fun let's ask the debugger what checkbox_label is --
+
+          yep, checkbox_label is an empty string.
+
+          so let's keep looking for gtk_widget_show() calls.
+
+          AH now this is promising.
+
+          gtk_widget_show_all() tries to show its whole subtree of widgets, of UI components. 
+
+          So maybe what's happening is GtkMessageDialog _always_ has an icon widget, but it's just not shown when the icon property's not set.
+
+          If so, this call here would show that unset icon.
+
+          That would be consistent with the no-icon symbol.
+
+          Let's see what happens if we remove the `_all()` from this.
+
+          rebuild
+
+          restart the process
+
+          pop up devools
+
+          show an alert
+
+          there we go!
+        </section>
 
         <section id="conclusions">
           <h3>So, what have we learned?</h3>
@@ -552,7 +647,7 @@
           <li class="fragment">There exists a sindresorhus repo with 1000 dependencies</li>
           </ul>
           <aside class="notes">
-          <p><b>(fragment)</b>It's OK to be a little lost. It's not OK to stress about it, because that <i>does</i> block you.</p>
+          <p><b>(fragment)</b>It's OK to be a little lost. The trick is to not stress about and let it block you. You can still do a lot of good even while you're learning.</p>
           <p><b>(fragment)</b>sinDreh sor-hoos</p>
         </section>
 
