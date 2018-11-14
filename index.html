@@ -4,9 +4,9 @@
   <head>
     <meta charset="utf-8">
 
-    <title>Electron Hacking for Absolute Beginners</title>
+    <title>Electron Hacking for Beginners</title>
 
-    <meta name="description" content="A gentle introduction to becoming productive in a 2.5 million LOC codebase">
+    <meta name="description" content="A gentle introduction to becoming productive in a very large codebase">
     <meta name="author" content="Charles Kerr">
 
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -183,9 +183,9 @@
         <section data-markdown data-separator-notes="XXX" id="chromium-tools">
           Chromium's Code Management Tools
 
-          1. [Depot Tools](https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/depot_tools.html): scripts that manage interaction with the Chromium source code repository and development process.
+          1. [Depot Tools](https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/depot_tools.html): scripts that manage interaction with the Chromium source code repository.
 
-          1. GClient _(part of depot tools)_: A meta-checkout tool that manages both subversion and git checkouts. Works on Linux, OS X, and Windows.
+          1. GClient _(part of depot tools)_: A meta-checkout tool. Works on Linux, OS X, and Windows.
 
           1. [GN](//gn.googlesource.com/gn/+/master/docs/): A meta-build system that generates build files for [Ninja](https://ninja-build.org/).
 
@@ -204,10 +204,11 @@
           Jeremy Althorp at Slack and John Kleinschmidt at GitHub did some
           heroic work earlier this year migrating us from GYP to GN.
 
-          That was ... that was a journey.
         </section>
         <section data-markdown data-separator-notes="XXX" id="removing-gyp" data-background-video="removing-gyp.webm" data-background-color="#000000">
           XXX
+          And a good time was had by all.
+
           but we survived,
 
           And yes, GN is better.
@@ -338,24 +339,34 @@
         </section>
 
         <section data-markdown data-separator-notes="XXX" id="sloccount-more-relevant">
-          **Chromium modules more relevant to Electron**
+          Chromium code more relevant to Electron
 
           ```sh
-          ~/electron/electron-gn/src$ sloccount \
-            base content blink ipc net media sandbox skia ui
-          cpp:        2,439,538 (91.48%)
-          javascript:     94,700 (3.55%)
-          Total Physical Source Lines of Code (SLOC) = 2,666,659
+          $ rg --no-filename "^#include \"" | grep -v -e atom -e electron \
+             | perl -pe "s/\"(\w*?)\/(?:.*)\"/\$1/" \
+             | grep -v -e "\.h\"" | sort | uniq -c | sort -nr | head -n8
+           878 #include base
+           430 #include content
+           340 #include ui
+           202 #include native_mate
+           184 #include net
+           113 #include third_party
+            80 #include chrome
+            75 #include components
+          $ sloccount base content ui electron/native_mate \
+            net third_party/skia third_party/blink chrome/browser/ui \
+            components/prefs services v8 | grep "Total Physical"
+          Total Physical Source Lines of Code (SLOC) = 6,619,444
           ```
 
           XXX
-          Down now from 35.3 million lines to just 2.6 million lines of code.
+          So now we're down to only 6 million lines of code.
 
-          I'll repeat that: "**JUST** 2.6 million lines of code."
+          Not so scary now, right? 
 
-          Not so scary now, right?
-
-          Well, maybe.
+          That's a cognitive bias technique called anchoring. 6 million lines of code is supposed to seem less scary now because at least it's not at 35 million.
+ 
+          Well, a little less, anyway.
 
           And, because some of you are wondering:
         </section>
@@ -507,7 +518,8 @@
           Some of it is, but a lot of it isn't.
 
           You're probably not going to be refactoring NativeWindow
-          or fixing Sandboxing on Linux right out of the gate.
+          or fixing Sandboxing on Linux on your first day.
+          That comes at around the 8 month mark.
 
           But if you've written Electron apps,
 
