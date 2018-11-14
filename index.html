@@ -95,7 +95,7 @@
           ## The Tools
 
           XXX
-          And all this should run about 20 minutes.
+          And all this should run about 20-25 minutes.
 
           Okay so let's start with the tools.
         </section>
@@ -505,8 +505,9 @@
 
           To be clear: no, I'm not saying Electron is easy.
           Some of it is, but a lot of it isn't.
-          You're not going to be implementing Sandboxing on
-          Linux right out of the gate.
+
+          You're probably not going to be refactoring NativeWindow
+          or fixing Sandboxing on Linux right out of the gate.
 
           But if you've written Electron apps,
 
@@ -638,37 +639,39 @@
 
           We got it.
 
-          And although I knew some GTK+ to solve this bug, as promised, at no point in this example did I show any knowledge of Electron's internals.
+          And although I knew some GTK+ to solve this bug, this one didn't really take any Electron.
 
-          *That'll* look good on my performance review.
+          (fast transition to)
         </section>
 
         <section id="conclusions">
-          <h3>So, what have we learned?</h3>
+          <h3>What Have We Learned?</h3>
           <ul>
-          <li class="fragment">Whether you know Electron, or Chromium, or Node, or Windows, or macOS or Carbon, or Linux or GTK+, or even just markdown... you have skills that are useful on Electron.</li>
-          <li class="fragment">Bootstrapping Electron is expensive upfront, but relatively cheap afterwards.</li>
+          <li class="fragment">Whether your background is in Electron, or GTK+, or Chromium, or Node, or Windows, or JS, or C++, or Obj-C, or Carbon, or Linux, or you wrangle CI boxen, or even Markdown... those are <i>all</i> skills that can get you started on Electron.</li>
+          <li class="fragment">Bootstrapping Electron is expensive upfront, but updates are cheap.</li>
           <li class="fragment">Electron is big, but may feel familiar if you've written Electron apps.</li>
           <li class="fragment">It's OK to be a little lost.</li>
           <li class="fragment">There exists a sindresorhus repo with 1000 dependencies</li>
           </ul>
           <aside class="notes">
-          <p><b>(read fragment 1)</b></p>
-          <p><b>(read fragment 2)</b> So send in two PRs instead of just one.</p>
+          <p><b>(read fragment 1)</b> ...also, if you know some of these and want to improve on others, Electron is a good playground for doing that.</p>
+          <p><b>(read fragment 2)</b>So write two PRs instead of just one.</p>
           <p><b>(read fragment 3)</b></p>
-          <p><b>(read fragment 4)</b> It's OK to be a little lost. The trick is to not stress about and let it block you. **You** can do a lot of good even while you're still learning.</p>
-          <p>and lastly... <b>(read fragment 5)</b> this is out there.</p>
+          <p><b>(read fragment 4)</b>It's OK to be a little lost. Don't stress about it. **You** can do a lot of good even while you're still learning.</p>
+          <p>and lastly... we learned <b>(read fragment 5)</b> this is out there.</p>
         </section>
 
         <section data-markdown data-separator-notes="XXX" id="thanks">
           ### Thanks for listening!
 
           #### Further reading
-          https://electronjs.org/docs/development
+          * https://electronjs.org/docs/development
 
-          https://electronjs.org/docs/development/build-instructions-gn
+          * https://cs.chromium.org/
 
-          https://www.chromium.org/developers/how-tos/getting-around-the-chrome-source-code
+          * https://www.chromium.org/developers/how-tos/getting-around-the-chrome-source-code
+
+          * https://www.patreon.com/sindresorhus
         </section>
 
       </div>
