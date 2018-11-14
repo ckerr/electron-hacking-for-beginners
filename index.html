@@ -47,17 +47,17 @@
           XXX
           Hi, I'm Charles Kerr. I haven't presented before, so a few sentences about me: I've worked for about a year on Electron for GitHub.
 
-          Before that I worked on Ubuntu Linux,
+          Before that I worked for about five years on Ubuntu Linux,
 
           and before that I wrote most of the BitTorrent app named Transmission.
 
           So I've done open source for awhile now.
 
-          And I came to Electron because I wanted to keep doing open source,
+          And I came to Electron because I wanted to keep doing it,
 
-          and because Electron is a net positive for getting more applications on Mac and Linux,
+          and because Electron is a Good Thing for getting more desktop apps on Mac and Linux,
 
-          and because it was 2017. it was way past time for me to dive into web tech.
+          and because the calendar said 2017 and it was way past time for me to learn web tech.
         </section>
 
         <section id="intent">
@@ -71,20 +71,21 @@
           <aside class="notes">
           <p>The Electron team's got a neat dynamic: we're a small team, but even
              then we're spread out among a lot of companies, like GitHub, Slack,
-             Microsoft, and Atlassian. And this works really well, and the PRs come in every day.</p>
+             Microsoft, and Atlassian. And this not how corporate teams usually work
+             but it works for us and the PRs come in every day.</p>
 
           <p>But we don't get as many PRs from the community as you'd expect for an
              open source tool whose primary users are developers.</p>
 
           <p>I think Electron's got a reputation that its internals are <i>too</i> big and <i>too</i> scary.
-             This presentation is to push back on that a little and encourage people to dive in.
+             This presentation is to push back on that a little and encourage you to dive in.
              I'll do this in three parts:</p>
 
           <p><b>fragment</b> The tools. Building electron takes a few tools you've used and a few weird ones you haven't, unless you're paid write web browsers.</p>
 
           <p><b>fragment</b> The code. Yes, the codebase is big. Really big. You won't believe how mind-bogglingly big it is. But I'll explain why that's OK and why you might understand more of it than you expect.</p>
 
-          <p><b>fragment</b> Lastly, putting it into practice. We'll fix a real Electron bug with zero Electron codebase knowledge required.</p>
+          <p><b>fragment</b> Lastly, putting it into practice. We'll walk through a real Electron bug that was reported about a month ago and fix it.</p>
 
           </aside>
         </section>
@@ -94,7 +95,7 @@
           ## The Tools
 
           XXX
-          And all this should run about FIXME minutes.
+          And all this should run about 20 minutes.
 
           Okay so let's start with the tools.
         </section>
@@ -112,13 +113,13 @@
           XXX
           There are platform-specific tools you need to install first.
 
-          I'm going to skip past them because most developers have already used or heard of these and... they're not scary.
+          These are documented at electronjs.org/docs and I'm going to skip past them because most developers have already used or heard of these and so ... they're not scary.
 
           For example if you're attending an Electron meetup, you've probably installed Node.js
 
           And if you're attending an Electron meetup and have a Mac, and you've probably installed something using homebrew.
 
-          So let's move on to first new thing.
+          So moving right along...
         </section>
 
         <section data-markdown data-separator-notes="XXX" id="code-what-code">
@@ -221,9 +222,8 @@
           <h2>The Code</h2>
 
           <aside class="notes">
-          <p>...there are a of hoops to jump through on Windows because...  Windows. It's all in the build docs at electronjs.org and I'm not going to get that far into the weeds.</p>
-          <p>My goal here is to show the big picture and where to get more information when you go home and try this on your own later.</p>
-          <p>So now you have the tools, it's time to get the code.</p>
+          <p>...there are a of hoops to jump through on Windows because...  Windows. It's not hard and it's all in the build docs at electronjs.org for when you go home and try this on your own later.</p>
+          <p>So now you have the code-fetching tools. Let's fetch some code.</p>
           </aside>
         </section>
 
@@ -245,15 +245,14 @@
           # This will take a while, go get a coffee.
           ```
           XXX
-          The important thing here you want to make sure you have a cache enabled.
+          The important thing here is you want to make sure you have a cache enabled.
 
-          I'll show you why in a moment, but the way you enable it is by creating a cache directory and setting the environment variable `GIT_CACHE_PATH` to it.
+          The next slides will show you why, and the way you enable it is easy: you create a cache directory and you set the environment variable `GIT_CACHE_PATH` to it.
 
           Once you have that, you run `gclient config` for first-time setup
 
-          and `gclient sync` any time after that when you want to refresh your files.
+          and `gclient sync` any time after that when you want to refresh your files, it's like a meta `git pull` with bells and whistles 
 
-          It's like a meta pull + submodule update.
         </section>
         
         <section data-markdown data-separator-notes="XXX" data-element-attributes="{_\s*?([^}]+?)}" id="gclient-outcome-time">
@@ -278,13 +277,13 @@
           ```
 
           XXX
-          No huge surprise here:
+          This slide isn't a huge surprise,
 
-          the first run is quite expensive. That 20 min was with a good internet connection.
+          As you'd expect for 35 million lines, the first run is quite expensive. That 20 min was with a good internet connection.
 
           but once you have the cache, resyncing is pretty cheap.
 
-          Most of that four minutes is spent in repo hooks, for example re-applying Electron's Chromium patches.
+          Most of that four minutes is spent in hooks, for example re-applying Electron's Chromium patches.
 
           And how big is that cache?
         </section>
@@ -303,7 +302,7 @@
 
           16 GB worth.
 
-          But don't act like this is so strange:
+          But you Node programmers shouldn't act like this is so strange:
 
           My first exposure to Node was on Electron. This slide is kind of how I felt when I ran `npm install` for the first time...
 
@@ -320,22 +319,20 @@
 
           What I love about this repo is six people downloaded it this week.
 
-          WHO ARE THESE PEOPLE??
+          WHO ARE THESE SIX PEOPLE??
 
-          Whoever you are... [next slide while saying this] maybe you'd enjoy bootstrapping Electron?
+          Whoever you are... 
         </section>
 
         <section data-markdown data-separator-notes="XXX" data-background="careers.png">
           XXX
+          maybe you're the kind of person who would have a fun Monday morning getting paid to bootstrap Electron!
+
           I hoped that would get a laugh. I put this in because we've got four stats-heavy slides coming up and I wanted to keep it light.
 
           That 35 million LOC number is not light. That's a scary number.
 
-          That's one of the scariest numbers I've ever seen in code.
-
-          But that counts Chromium's tests, its dependencies' tests, and a lot of pieces like `chromecast/` and `chrome_os/` that we don't use.
-
-          (I hope.)
+          But that counts Chromium's tests, its dependencies' tests, and a lot of pieces like `chromecast/` and `chrome_os/` that I hope we don't use
 
           So here's here's a more realistic, though arbitrary, count of the Chromium modules that Electron touches directly.
         </section>
@@ -352,17 +349,15 @@
           ```
 
           XXX
-          Down now from 35.3 million lines to just 2.6 million.
+          Down now from 35.3 million lines to just 2.6 million lines of code.
 
-          **JUST** 2.6 million lines of code.
-
-          That's nothing.
+          I'll repeat that: "**JUST** 2.6 million lines of code."
 
           Not so scary now, right?
 
-          Uh huh.
+          Well, maybe.
 
-          And, because someone's going to be wondering:
+          And, because some of you are wondering:
         </section>
 
         <section data-markdown data-separator-notes="XXX" id="sloccount-electron">
@@ -377,17 +372,22 @@
           javascript:   28,875 (34.35%)
           python:        3,059 (3.64%)
           Total Physical Source Lines of Code (SLOC)   = 84,072
+
+          SLOC  Directory SLOC-by-Language (Sorted)
+          52033 atom      cpp=52033
+          19204 spec      javascript=19099,sh=105
+          7590  lib       javascript=7590
+
           ```
 
           XXX
-          Electron itself: under 90 thousand lines.
+          Electron itself: about 85 thousand lines.
 
-          Aside: some of you with sharp eyes are noticing right now that about 20% of Electron's code is tests.
-          FIXME: the slide doesn't show this
+          Some of you with sharp eyes are looking at the bottom of that and noticing that about 20% of Electron's code is tests.
 
-          The number of open issues in our bug tracker might indicate otherwise, but each PR generates a _lot_ of testing.
+          The number of open issues in our bug tracker might indicate otherwise, but each PR you submit generates a _lot_ of good CI testing.
 
-          Okay so now we've got the code, let's do something with it.
+          Okay so now you've got the code. What do you do with code?
         </section>
         <section data-markdown data-separator-notes="XXX" id="electron-build-caching">
           Building Electron
@@ -407,7 +407,7 @@
 
           If you use that you never have a completely cold cache,
 
-          because even the on the first run, it can pull from Electron's CI builds' cache.
+          because even the on your first run, it will help you by pulling from Electron's CI builds' cache.
 
           This is what electron builds look like:
         </section>
@@ -452,9 +452,9 @@
 
           3. the cache has grown again, another couple GB to sccache this time.
 
-          4. you can see at the bottom there, the CI cache at electronjs-sccache is working
+          4. you can see at the bottom there, the s3 CI cache is working
 
-          We're done with the scary numbers and stats.
+          So the scary numbers and stats end on a happy note here.
 
           Let's take a really quick look at the source.
         </section>
@@ -474,9 +474,9 @@
             Much of this is the minimum it takes to expose our C++ backend as a public JS API.
 
           Atom is the next layer, the C++ code between lib and Chromium.
-          And it, in turn, is mostly whatever it takes to epose Chromium to Electron app developers.
+          And it, in turn, is whatever it takes to expose Chromium to something that can be consumed by the our javascript API.
 
-          For example the largest class in Electron is atom_api_web_contents.
+          For example the largest c++ class in Electron is atom_api_web_contents.
           Let's take at its header file to see what it's about:
         </section>
 
@@ -523,14 +523,14 @@
           <ul>
           <li class="fragment">You understand more than you think.</li>
           <li class="fragment">There's even more that you don't understand, but that's OK.</li>
-          <li class="fragment">If you want to step up your C++ game, you could do a lot worse than learning Chromium.</li>
+          <li class="fragment">If you want to step up your C++ game, you could do a lot worse than learning Chromium and Electron.</li>
           </ul>
           <aside class="notes">
           <p>As said in the last slide, <b>(fragment)</b> you understand more than you think.</p>
           <p><b>(fragment)</b> When I started contributing to Electron, I'd never touched Node. So for me it was both unfamiliar *and* alien, and I stressed over that a lot.</p>
-          <p>The thing to undertand is you've got millions of lines of code -- <b>everyone</b> is lost to some degree.</p>
-          <p>When I realized it's OK to be a <i>little</i> lost, that freed me up to stress about it less and focus more.</p>
-          <p><b>(fragment)</b> As an aside, Chromium has a lot of solid engineering. [read fragment aloud here] The directory named `base/` holds general-use tools, mostly self-contained, so it's not a bad place to start. You'll find Chromium's string manipulation, memory management, callback binding, and so on.</p>
+          <p>The thing to understand is you've got millions of lines of code -- <b>everyone</b> is lost to some degree.</p>
+          <p>When I realized it's OK to be a <i>little</i> lost, that freed me up to stress about it less and focus and learn faster.</p>
+          <p><b>(fragment)</b> As an aside, Chromium has a lot of solid engineering. [read fragment aloud here] The Chromium directory named `base/` holds general-use tools, mostly self-contained, so it's not a bad place to start. You'll find Chromium's string manipulation, memory management, callback binding, and so on.</p>
         </section>
 
         <section data-markdown data-separator-notes="XXX" id="in-practice">
@@ -540,20 +540,20 @@
           XXX
           To review: So far we've checked out 16 GB of source code
 
-          and we've built 18 thousand files
+          and we've run 18 thousand and 98 build steps
 
           and we know what `win.openDevTools()` does
 
-          We're invincible!
+          So we're invincible, right?
 
-          Time to get our hands dirty.
+          Let's get our hands dirty.
 
-          Here's a real bug:
+          As promised, here's a real bug that was reported about a month ago:
         </section>
 
         <section data-markdown data-separator-notes="XXX" id="bug-report" data-background="bug-report.png">
           XXX
-          So this bug report is straightforward: on Linux, the `alert()` dialog is showing a No Symbol.
+          The screenshot here says it all: on Linux, the `alert()` dialog is showing a No Symbol icon.
 
           This should be easy to test.
         </section>
@@ -635,26 +635,40 @@
           show an alert
 
           there we go!
+
+          We got it.
+
+          And although I knew some GTK+ to solve this bug, as promised, at no point in this example did I show any knowledge of Electron's internals.
+
+          *That'll* look good on my performance review.
         </section>
 
         <section id="conclusions">
           <h3>So, what have we learned?</h3>
           <ul>
+          <li class="fragment">Whether you know Electron, or Chromium, or Node, or Windows, or macOS or Carbon, or Linux or GTK+, or even just markdown... you have skills that are useful on Electron.</li>
           <li class="fragment">Bootstrapping Electron is expensive upfront, but relatively cheap afterwards.</li>
           <li class="fragment">Electron is big, but may feel familiar if you've written Electron apps.</li>
           <li class="fragment">It's OK to be a little lost.</li>
-          <li class="fragment">Whether you know Electron, or Chromium, or Node, or Windows, or macOS or Carbon, or Linux or GTK+... you have a starting point.</li>
           <li class="fragment">There exists a sindresorhus repo with 1000 dependencies</li>
           </ul>
           <aside class="notes">
-          <p><b>(fragment)</b>It's OK to be a little lost. The trick is to not stress about and let it block you. You can still do a lot of good even while you're learning.</p>
-          <p><b>(fragment)</b>sinDreh sor-hoos</p>
+          <p><b>(read fragment 1)</b></p>
+          <p><b>(read fragment 2)</b> So send in two PRs instead of just one.</p>
+          <p><b>(read fragment 3)</b></p>
+          <p><b>(read fragment 4)</b> It's OK to be a little lost. The trick is to not stress about and let it block you. **You** can do a lot of good even while you're still learning.</p>
+          <p>and lastly... <b>(read fragment 5)</b> this is out there.</p>
         </section>
 
         <section data-markdown data-separator-notes="XXX" id="thanks">
           ### Thanks for listening!
 
-          FIXME: links
+          #### Further reading
+          https://electronjs.org/docs/development
+
+          https://electronjs.org/docs/development/build-instructions-gn
+
+          https://www.chromium.org/developers/how-tos/getting-around-the-chrome-source-code
         </section>
 
       </div>
